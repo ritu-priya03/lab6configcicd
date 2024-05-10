@@ -1,15 +1,14 @@
-FROM python:3.8
+# Use an official Python runtime as a parent image
+FROM python:3.9-slim
 
-ARG VERSION
+# Set the working directory in the container
+WORKDIR /app
 
-LABEL org.label-schema.version=$VERSION
+# Copy the current directory contents into the container at /app
+COPY . /app
 
-COPY ./requirements.txt /src/requirements.txt
+# Install any needed dependencies specified in requirements.txt
+RUN pip install --no-cache-dir -r requirements.txt
 
-WORKDIR /src
-
-RUN pip install -r requirements.txt 
-
-COPY src/* /src/
-
-CMD [ "python", "./hello.py"]
+# Run app.py when the container launches
+CMD ["python", "app.py"]
